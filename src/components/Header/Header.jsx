@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Login from '../../features/Auth/components/Login/Login';
 import Register from '../../features/Auth/components/Register/Register';
 import { logout } from '../../features/Auth/userSlice';
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        marginRight: '10px'
     },
     search: {
         position: 'relative',
@@ -88,7 +90,11 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute'
     },
     link: {
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: 'white',
+        '&:hover': {
+            color: '#e0d186'
+        }
     }
 }));
 const styles = (theme) => ({
@@ -228,9 +234,6 @@ const Header = props => {
                         Login
                     </Button>
                 )}
-
-
-
             </MenuItem>
         </Menu>
     );
@@ -253,7 +256,14 @@ const Header = props => {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Tiki clone
+                        <Link to="/" className={classes.link}>
+                            Tiki clone
+                        </Link>
+                    </Typography>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        <Link to='/products' className={classes.link}>
+                            Products
+                        </Link>
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
@@ -269,6 +279,7 @@ const Header = props => {
                         />
                     </div>
                     <div className={classes.grow} />
+
                     <div className={classes.sectionDesktop}>
                         {isLogined ? (
                             <IconButton

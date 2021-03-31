@@ -6,7 +6,7 @@ import InputField from '../../../../components/Form/InputField';
 import PasswordField from '../../../../components/Form/PasswordField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-const RegisterForm = (props) => {
+const LoginForm = (props) => {
     const schema = yup.object().shape({
         identifier: yup.string().required('Please enter your email').email('Invalid email'),
         password: yup.string().required('Please enter your password').min(8, 'Please enter at least 8 characters'),
@@ -39,8 +39,8 @@ const RegisterForm = (props) => {
     )
 }
 
-RegisterForm.propTypes = {
+LoginForm.propTypes = {
     onSubmit: PropTypes.func.isRequired
 }
 
-export default RegisterForm
+export default LoginForm
