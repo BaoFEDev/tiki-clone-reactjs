@@ -2,6 +2,8 @@ import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,12 +47,18 @@ const useStyles = makeStyles((theme) => ({
 const FilterByPrice = props => {
     const { onChange } = props;
     const classes = useStyles();
+    const schema = yup.object().shape({
+        salePrice_gte: yup.number().required('Please enter your price'),
+        salePrice_lte: yup.string().required('Please enter your price'),
+    });
     const form = useForm({
         defaultValues: {
             salePrice_gte: '',
             salePrice_lte: '',
-        }
+        },
+        resolver: yupResolver(schema),
     });
+    const { errors } = form;
     const onSubmit = (values) => {
         if (onChange) {
             onChange(values)
@@ -66,6 +74,8 @@ const FilterByPrice = props => {
                         as={<input />}
                         name="salePrice_gte"
                         control={form.control}
+                        error={errors['salePrice_gte']}
+                        helperText={errors['salePrice_gte']?.message}
                     />
                     <span>-</span>
                     <Controller
@@ -73,6 +83,8 @@ const FilterByPrice = props => {
                         name="salePrice_lte"
                         control={form.control}
                         style={{ marginLeft: '8px' }}
+                        error={errors['salePrice_lte']}
+                        helperText={errors['salePrice_lte']?.message}
                     />
                 </div>
                 <button className={classes.buttonSubmit} type="submit">

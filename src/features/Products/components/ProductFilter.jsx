@@ -18,7 +18,6 @@ const ProductFilter = props => {
     }
     const handleSubmitPrice = (submittedPrice) => {
         if (onChange) onChange(submittedPrice)
-        console.log('submittedPrice', submittedPrice);
     }
     return (
         <>
