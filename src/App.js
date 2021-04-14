@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
+import NotFound from './components/NotFound/NotFound';
 import HomeFeature from './features/Home';
 import ProductFeature from './features/Products/pages/ListPage';
 function App() {
@@ -9,8 +10,11 @@ function App() {
     <>
       <Header />
       <Switch>
+        <Redirect from="/home" to="/" exact />
+
         <Route path="/" component={HomeFeature} exact />
-        <Route path="/products" component={ProductFeature} exact />
+        <Route path="/products" component={ProductFeature} />
+        <Route component={NotFound} />
       </Switch>
     </>
   );

@@ -35,10 +35,11 @@ const userSlice = createSlice({
         [register.fulfilled]: (state, action) => {
             state.current = action.payload
         },
+    },
+    extraReducers: {
         [login.fulfilled]: (state, action) => {
             state.current = action.payload
         }
-
     }
 })
 

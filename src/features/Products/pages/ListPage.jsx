@@ -1,15 +1,14 @@
 import { Box, Container, Grid, makeStyles } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
+import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import categoryApi from '../../../api/categoryApi';
 import productApi from '../../../api/productApi';
-import SortTabs from '../../../components/Tabs/SortTabs';
+import ProductSort from '../components/ProductSort';
 import FilterViewer from '../components/Filters/FilterViewer';
 import ProductFilter from '../components/ProductFilter';
 import ProductList from '../components/ProductList';
 import ProductSkeletons from '../components/ProductSkeletons';
-import queryString from 'query-string';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ListPage = props => {
     const [product, setProduct] = useState([]);
-
     const [loading, isLoading] = useState(true);
     let history = useHistory();
     let location = useLocation();
@@ -49,7 +47,6 @@ const ListPage = props => {
             isFreeShip: params.isFreeShip === 'true',
         }
     }, [location.search]);
-
     const [pagination, setPagination] = useState({
         _page: 1,
         _limit: 10,
@@ -61,7 +58,6 @@ const ListPage = props => {
                 const { data, pagination } = await productApi.getAll(queryParams);
                 setProduct(data);
                 setPagination(pagination);
-                console.log(pagination);
             } catch (error) {
                 console.log(error);
             }
@@ -116,7 +112,7 @@ const ListPage = props => {
                     </Box>
                 </Grid>
                 <Grid item xs={9} className={classes.rightCol}>
-                    <SortTabs currentSort={queryParams._sort} onChange={handleSortChange} />
+                    <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
                     <FilterViewer onChange={handleViewerFilter} filters={queryParams} />
                     {loading ? <ProductSkeletons length={8} /> : <ProductList data={product} />}
                 </Grid>

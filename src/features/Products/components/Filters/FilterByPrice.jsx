@@ -1,8 +1,8 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +58,7 @@ const FilterByPrice = props => {
         },
         resolver: yupResolver(schema),
     });
-    const { errors } = form;
+    const { register, formState: { errors }, } = form;
     const onSubmit = (values) => {
         if (onChange) {
             onChange(values)
@@ -71,21 +71,28 @@ const FilterByPrice = props => {
             <form onSubmit={form.handleSubmit(onSubmit)} className={classes.formPrice}>
                 <div className={classes.inputGroup}>
                     <Controller
-                        as={<input />}
-                        name="salePrice_gte"
+                        render={({ field }) =>
+                            <input
+                                {...register("salePrice_gte")}
+                                {...field}
+                                type="text"
+                            />}
                         control={form.control}
-                        error={errors['salePrice_gte']}
-                        helperText={errors['salePrice_gte']?.message}
+                        name="salePrice_gte"
                     />
+                    <p className="error ">{errors.salePrice_gte?.message}</p>
                     <span>-</span>
                     <Controller
-                        as={<input />}
-                        name="salePrice_lte"
+                        render={({ field }) =>
+                            <input
+                                {...register("salePrice_lte")}
+                                {...field}
+                                type="text"
+                            />}
                         control={form.control}
-                        style={{ marginLeft: '8px' }}
-                        error={errors['salePrice_lte']}
-                        helperText={errors['salePrice_lte']?.message}
+                        name="salePrice_lte"
                     />
+                    <p className="error ">{errors.salePrice_lte?.message}</p>
                 </div>
                 <button className={classes.buttonSubmit} type="submit">
                     Áp dụng

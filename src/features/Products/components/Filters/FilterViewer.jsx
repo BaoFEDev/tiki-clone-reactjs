@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
-import { Chip, makeStyles } from '@material-ui/core'
+import { Chip, makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useState } from 'react';
 import categoryApi from '../../../../api/categoryApi';
 
 const useStyle = makeStyles((theme) => ({
@@ -21,20 +21,20 @@ const FilterViewer = (props) => {
     const [category, setCategory] = useState([]);
     const classes = useStyle();
     const { onChange = null, filters = {} } = props;
-    useEffect(() => {
-        (async () => {
-            try {
-                const category = await categoryApi.get(filters['category.id']);
-                setCategory(category)
-            } catch (error) {
-                console.log(error);
-            }
-            return () => {
-                let oldCategory = { ...category }
-                delete oldCategory.name;
-            }
-        })();
-    }, [filters['category.id']]);
+    // useEffect(() => {
+    //     (async () => {
+    //         try {
+    //             const category = await categoryApi.get(filters['category.id']);
+    //             setCategory(category)
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //         return () => {
+    //             let oldCategory = { ...category }
+    //             delete oldCategory.name;
+    //         }
+    //     })();
+    // }, [filters['category.id']]);
     const FILTER_LIST = [
         {
             id: 1,
@@ -82,21 +82,21 @@ const FilterViewer = (props) => {
                 return newFilters;
             }
         },
-        {
-            id: 4,
-            getLabel: (filters) => `${category.name}`,
-            isActive: (filters) => true,
-            isVisible: (filters) => { return filters['category.id'] },
-            isRemovable: (filters) => true,
-            onToggle: (filters) => { },
-            onRemove: (filters) => {
-                let newFilters = { ...filters };
-                if (newFilters['category.id']) {
-                    delete newFilters['category.id'];
-                }
-                return newFilters;
-            }
-        }
+        // {
+        //     id: 4,
+        //     getLabel: (filters) => `${category.name}`,
+        //     isActive: (filters) => true,
+        //     isVisible: (filters) => { return filters['category.id'] },
+        //     isRemovable: (filters) => true,
+        //     onToggle: (filters) => { },
+        //     onRemove: (filters) => {
+        //         let newFilters = { ...filters };
+        //         if (newFilters['category.id']) {
+        //             delete newFilters['category.id'];
+        //         }
+        //         return newFilters;
+        //     }
+        // }
     ];
     const memoizedValue = useMemo(() => FILTER_LIST.filter(x => x.isVisible(filters)), [filters]);
     return (

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { Box, Checkbox, FormControlLabel, FormGroup } from '@material-ui/core'
+import { Box, Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 
 const FilterByService = props => {

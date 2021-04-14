@@ -1,27 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
-import { TextField } from "@material-ui/core";
-
+import IconButton from "@material-ui/core/IconButton";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { FormHelperText } from "@material-ui/core";
 const PasswordField = (props) => {
     const { name, disabled, form, label } = props;
-    const { errors } = form;
+    const { formState: { errors }, register } = form;
     const hasError = errors[name];
+    const [showPassword, setShowPassword] = useState(false);
+
+    const toggleShowPassword = () => {
+        setShowPassword((x) => !x);
+    };
     return (
         <>
-            <Controller
-                name={name}
-                control={form.control}
-                as={TextField}
-                margin="normal"
-                variant="outlined"
-                label={label}
-                disabled={disabled}
-                error={!!hasError}
-                helperText={errors[name]?.message}
-                fullWidth
-                type="password"
-            />
+            <FormControl fullWidth error={hasError} margin="normal" variant="outlined"
+            >
+                <InputLabel htmlFor={name}>{label}</InputLabel>
+                <Controller
+                    control={form.control}
+                    name={name}
+                    disabled={disabled}
+                    render={({ field }) => (
+                        <OutlinedInput
+                            id={name}
+                            type={showPassword ? "text" : "password"}
+                            label={label}
+                            {...register(name)}
+                            {...field}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={toggleShowPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    )}
+                />
+
+                <FormHelperText>{errors[name]?.message}</FormHelperText>
+            </FormControl>
         </>
     );
 };

@@ -1,7 +1,7 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import PropTypes from "prop-types";
 import React from 'react';
 import Products from './Products';
-import PropTypes from "prop-types";
 
 
 const ProductList = (props) => {

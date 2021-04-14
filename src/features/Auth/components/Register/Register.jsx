@@ -23,7 +23,7 @@ const Register = (props) => {
             enqueueSnackbar('Registerd successfully', { variant: 'success' });
         } catch (error) {
             console.log('Register failed');
-            enqueueSnackbar('Register failed', { variant: 'success' });
+            enqueueSnackbar('Register failed', { variant: 'error' });
         }
     };
     return (

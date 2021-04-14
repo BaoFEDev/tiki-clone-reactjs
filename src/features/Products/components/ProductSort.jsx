@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     },
 });
 
-const SortTabs = (props) => {
+const ProductSort = (props) => {
     const { onChange, currentSort } = props;
     const classes = useStyles();
 
@@ -34,9 +34,9 @@ const SortTabs = (props) => {
     )
 }
 
-SortTabs.propTypes = {
+ProductSort.propTypes = {
     currentSort: PropTypes.string.isRequired,
     onChange: PropTypes.func
 }
 
-export default SortTabs
+export default ProductSort

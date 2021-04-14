@@ -1,20 +1,18 @@
-import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
-import ListPage from './pages/ListPage';
+import React from "react";
+import { Route, Switch, useRouteMatch } from "react-router";
+import DetailPage from "./pages/DetailPage";
+import ListPage from "./pages/ListPage";
 
-const ProductFeature = props => {
+const ProductFeature = (props) => {
     let match = useRouteMatch();
     return (
-        <>
-            <Switch>
-                <Route to={match.url} exact component={ListPage} />
-            </Switch>
-        </>
-    )
-}
+        <Switch>
+            <Route path={match.url} exact component={ListPage} />
+            <Route path={`${match.url}/:productId`} component={DetailPage} />
+        </Switch>
+    );
+};
 
-ProductFeature.propTypes = {
+ProductFeature.propTypes = {};
 
-}
-
-export default ProductFeature
+export default ProductFeature;

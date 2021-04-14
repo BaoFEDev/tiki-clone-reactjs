@@ -4,22 +4,27 @@ import { Controller } from "react-hook-form";
 import { TextField } from "@material-ui/core";
 
 const InputField = (props) => {
-    const { name, form, label, disabled } = props;
-    const { errors } = form;
+    const { name, disabled, form, label } = props;
+    const { formState: { errors }, register } = form;
     const hasError = errors[name];
     return (
         <>
             <Controller
-                name={name}
+                render={({ field }) =>
+                    <TextField
+                        {...register(name)}
+                        {...field}
+                        type="text"
+                        margin="normal"
+                        variant="outlined"
+                        label={label}
+                        fullWidth
+                        error={!!hasError}
+                        helperText={errors[name]?.message}
+                    />}
                 control={form.control}
-                as={TextField}
-                margin="normal"
-                variant="outlined"
-                label={label}
-                error={hasError}
-                helperText={errors[name]?.message}
+                name={name}
                 disabled={disabled}
-                fullWidth
             />
         </>
     );
@@ -29,7 +34,7 @@ InputField.propTypes = {
     form: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     label: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
 };
 
 export default InputField;
